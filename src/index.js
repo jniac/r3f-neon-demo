@@ -55,7 +55,7 @@ const GlowingSphere = props => {
   )
 }
 
-const ACubeThatRotate = ({ children, ...props }) => {
+const ACubeThatRotates = ({ children, ...props }) => {
   const ref = useRef()
   useFrame(() => (ref.current.rotation.x = ref.current.rotation.y += 0.01))
   return (
@@ -79,12 +79,12 @@ const Main = () => {
       <ambientLight intensity={0.25} color='#8bead3' />
       <directionalLight position={[10, 30, 10]} />
 
-      <ACubeThatRotate>
+      <ACubeThatRotates>
         <NormalSphere position={[-distance, 0, 0]} />
         <NormalSphere position={[distance, 0, 0]} />
         <GlowingSphere position={[0, -distance, 0]} />
         <GlowingSphere position={[0, distance, 0]} />
-      </ACubeThatRotate>
+      </ACubeThatRotates>
 
       <Neon />
 
