@@ -1,3 +1,3 @@
 # r3f-neon-demo
 
-A very simple demo about a "Neon Effect"
+[A very simple demo](https://jniac.github.io/r3f-neon-demo/build/) about a "Neon Effect"
