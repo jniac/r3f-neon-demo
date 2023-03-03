@@ -7,7 +7,7 @@ import {
   Noise,
   Vignette,
 } from '@react-three/postprocessing'
-import { OrbitControls } from '@react-three/drei'
+import { AccumulativeShadows, OrbitControls, RandomizedLight } from '@react-three/drei'
 import { Color } from 'three'
 import './styles.css'
 
@@ -28,10 +28,10 @@ const NeonMaterial = () => {
   )
 }
 
-const Neon = () => {
+const NeonRing = () => {
   return (
-    <mesh>
-      <torusGeometry args={[2, .05, 12, 64]} />
+    <mesh castShadow>
+      <torusGeometry args={[2, 0.05, 12, 64]} />
       <NeonMaterial />
     </mesh>
   )
@@ -39,28 +39,29 @@ const Neon = () => {
 
 const NormalSphere = props => {
   return (
-    <mesh {...props}>
-      <icosahedronGeometry args={[.15, 4]} />
+    <mesh {...props} castShadow receiveShadow>
+      <icosahedronGeometry args={[0.15, 4]} />
       <meshPhysicalMaterial />
     </mesh>
   )
 }
 
-const GlowingSphere = props => {
+const NeonSphere = props => {
   return (
     <mesh {...props}>
-      <icosahedronGeometry args={[.15, 4]} />
+      <icosahedronGeometry args={[0.15, 4]} />
       <NeonMaterial />
+      <pointLight color='8bead3' intensity={1} distance={1} />
     </mesh>
   )
 }
 
 const ACubeThatRotates = ({ children, ...props }) => {
   const ref = useRef()
-  useFrame(() => (ref.current.rotation.x = ref.current.rotation.y += .01))
+  useFrame(() => (ref.current.rotation.x = ref.current.rotation.y += 0.01))
   return (
     <group ref={ref} {...props}>
-      <mesh>
+      <mesh castShadow receiveShadow>
         <boxGeometry />
         <meshPhysicalMaterial />
       </mesh>
@@ -69,28 +70,64 @@ const ACubeThatRotates = ({ children, ...props }) => {
   )
 }
 
-const Main = () => {
-  const distance = .66
+const Ground = () => {
   return (
-    <Canvas>
+    <group position={[0, -2, 0]}>
+      <mesh castShadow>
+        <boxGeometry />
+        <meshPhysicalMaterial />
+      </mesh>
+
+      <group position-y={-.6}>
+        <mesh position-y={-1}>
+          <cylinderGeometry args={[4, 4, 2]} />
+          <meshPhysicalMaterial />
+        </mesh>
+        <AccumulativeShadows
+          position-y={.01} //  tiny offset to avoid glitches (overlap)
+          temporal
+          frames={100}
+          color='white'
+          toneMapped={true}
+          alphaTest={0.9}
+          scale={12}>
+          <RandomizedLight
+            amount={8}
+            radius={8}
+            ambient={0.5}
+            intensity={1}
+            position={[10, 30, 10]}
+            bias={0.001}
+          />
+        </AccumulativeShadows>
+      </group>
+    </group>
+  )
+}
+
+const Main = () => {
+  const distance = 0.66
+  return (
+    <Canvas shadows>
       <OrbitControls />
-      
-      <Background />      
-      <ambientLight intensity={.25} color='#8bead3' />
-      <directionalLight position={[10, 30, 10]} />
+
+      <Background />
+      <ambientLight intensity={0.25} color='#8bead3' />
+      <directionalLight castShadow position={[10, 30, 10]} />
 
       <ACubeThatRotates>
         <NormalSphere position={[-distance, 0, 0]} />
         <NormalSphere position={[distance, 0, 0]} />
-        <GlowingSphere position={[0, -distance, 0]} />
-        <GlowingSphere position={[0, distance, 0]} />
+        <NeonSphere position={[0, -distance, 0]} />
+        <NeonSphere position={[0, distance, 0]} />
       </ACubeThatRotates>
 
-      <Neon />
+      <Ground />
+      <NeonRing />
 
       <EffectComposer>
-        <Bloom mipmapBlur luminanceThreshold={.9} radius={.4} />
-        <Noise opacity={.02} />
+        <Bloom mipmapBlur luminanceThreshold={0.9} radius={0.4} />
+        <Noise opacity={0.02} />
         <Vignette />
       </EffectComposer>
     </Canvas>
