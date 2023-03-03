@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/build/static/css/main.d464d6e4.css",
-    "main.js": "/build/static/js/main.a19ac622.js",
-    "index.html": "/build/index.html",
-    "main.d464d6e4.css.map": "/build/static/css/main.d464d6e4.css.map",
-    "main.a19ac622.js.map": "/build/static/js/main.a19ac622.js.map"
+    "main.css": "/r3f-neon-demo/build/static/css/main.d464d6e4.css",
+    "main.js": "/r3f-neon-demo/build/static/js/main.a19ac622.js",
+    "index.html": "/r3f-neon-demo/build/index.html",
+    "main.d464d6e4.css.map": "/r3f-neon-demo/build/static/css/main.d464d6e4.css.map",
+    "main.a19ac622.js.map": "/r3f-neon-demo/build/static/js/main.a19ac622.js.map"
   },
   "entrypoints": [
     "static/css/main.d464d6e4.css",

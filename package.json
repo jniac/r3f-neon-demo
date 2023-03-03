@@ -2,7 +2,7 @@
   "name": "r3f-neon-demo",
   "version": "1.0.0",
   "description": "Shows the results of gltfjsx transform compression.",
-  "homepage": "build",
+  "homepage": "r3f-neon-demo/build",
   "keywords": [
     "bloom",
     "gltfjsx",
