@@ -31,7 +31,7 @@ const NeonMaterial = () => {
 const Neon = () => {
   return (
     <mesh>
-      <torusGeometry args={[2, 0.05, 12, 64]} />
+      <torusGeometry args={[2, .05, 12, 64]} />
       <NeonMaterial />
     </mesh>
   )
@@ -40,7 +40,7 @@ const Neon = () => {
 const NormalSphere = props => {
   return (
     <mesh {...props}>
-      <icosahedronGeometry args={[0.15, 4]} />
+      <icosahedronGeometry args={[.15, 4]} />
       <meshPhysicalMaterial />
     </mesh>
   )
@@ -49,7 +49,7 @@ const NormalSphere = props => {
 const GlowingSphere = props => {
   return (
     <mesh {...props}>
-      <icosahedronGeometry args={[0.15, 4]} />
+      <icosahedronGeometry args={[.15, 4]} />
       <NeonMaterial />
     </mesh>
   )
@@ -57,7 +57,7 @@ const GlowingSphere = props => {
 
 const ACubeThatRotates = ({ children, ...props }) => {
   const ref = useRef()
-  useFrame(() => (ref.current.rotation.x = ref.current.rotation.y += 0.01))
+  useFrame(() => (ref.current.rotation.x = ref.current.rotation.y += .01))
   return (
     <group ref={ref} {...props}>
       <mesh>
@@ -70,13 +70,13 @@ const ACubeThatRotates = ({ children, ...props }) => {
 }
 
 const Main = () => {
-  const distance = 0.66
+  const distance = .66
   return (
     <Canvas>
       <OrbitControls />
       
       <Background />      
-      <ambientLight intensity={0.25} color='#8bead3' />
+      <ambientLight intensity={.25} color='#8bead3' />
       <directionalLight position={[10, 30, 10]} />
 
       <ACubeThatRotates>
@@ -89,8 +89,8 @@ const Main = () => {
       <Neon />
 
       <EffectComposer>
-        <Bloom mipmapBlur luminanceThreshold={0.9} radius={0.4} />
-        <Noise opacity={0.02} />
+        <Bloom mipmapBlur luminanceThreshold={.9} radius={.4} />
+        <Noise opacity={.02} />
         <Vignette />
       </EffectComposer>
     </Canvas>
